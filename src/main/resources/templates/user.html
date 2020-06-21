@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Title</title>
+    <style>
+        li {
+            list-style-type: none; /* Убираем маркеры */
+        }
+
+        ul {
+            margin-top: 1px;
+            margin-bottom: 1px;
+            margin-left: 0; /* Отступ слева в браузере IE и Opera */
+            padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+            padding-bottom: 1px;
+            padding-top: 1px;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+<div align="center">
+    <form th:object="${user}">
+        <p>ID: <a th:text="${user.id}"/></p>
+        <p>Email: <a th:text="${user.email}"/></p>
+        <p>Password: <a th:text="${user.password}"/></p>
+        <p>Role:
+            <a>
+                <ul>
+                    <li th:each="role: ${user.roles}" th:text="${role.name}"></li>
+                </ul>
+            </a></p>
+    </form>
+</div>
+</body>
+</html>

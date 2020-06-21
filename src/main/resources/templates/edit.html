@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div align="center">
+    <h1>Изменить пользователя</h1><br><br>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+    <form th:action="@{/admin/edit}" th:object="${user}" method="post">
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>ID</th>
+                <td>
+                    <input type="text" th:field="${user.id}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>
+                    <input type="email" th:field="${user.email}">
+                </td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>
+                    <input type="text" th:field="${user.password}">
+                </td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>
+                    <ul>
+                        <li th:each="roles : ${user.roles}">
+                            <input type="checkbox" th:field="*{roles}" th:value="${roles.id}"/>
+                            <label th:for="${#ids.prev('roles')}"
+                                   th:text="${roles.name}"></label>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="submit">Сохранить</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
