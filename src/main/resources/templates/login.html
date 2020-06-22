@@ -2,33 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </head>
 <body>
 <div align="center">
-    <h1>Вход</h1>
+    <h1>Please sign in</h1>
     <div>
         <form th:action="@{/login}" method="post">
-            <table border="1" cellpadding="10">
-                <tr>
-                    <th>Email</th>
-                    <td>
-                        <input type="email" name="j_email">
-                    </td>
-                </tr>
-                <tr>
-                    <th>Password</th>
-                    <td>
-                        <input type="password" name="j_password">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <button type="submit">Войти</button>
-                    </td>
-                </tr>
-            </table>
+            <input type="email" name="j_email" placeholder="Email address" size="30"> <br>
+            <input type="password" name="j_password" placeholder="Password" size="30"><br>
+            <button type="submit">Войти</button>
         </form>
     </div>
 </div>
