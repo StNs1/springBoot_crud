@@ -20,6 +20,9 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String printUsers(@SessionAttribute("user") User user, ModelMap model) {
+        User newUser = new User();
+        newUser.setRoles(userService.getRoles(1L, 2L));
+        model.addAttribute("newUser", newUser);
         List<User> list = userService.listUsers();
         model.addAttribute("list", list);
         model.addAttribute("currentUser", user);

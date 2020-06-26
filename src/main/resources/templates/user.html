@@ -7,39 +7,61 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <style>
-        li {
-            list-style-type: none; /* Убираем маркеры */
-        }
-
-        ul {
-            margin-top: 1px;
-            margin-bottom: 1px;
-            margin-left: 0; /* Отступ слева в браузере IE и Opera */
-            padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
-            padding-bottom: 1px;
-            padding-top: 1px;
-        }
-    </style>
 </head>
 <body>
-<div align="center">
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
+
+<div class="navbar navbar-fixed-top navbar-dark bg-dark">
+    <div class="navbar-header">
+        <a class="navbar-brand font-weight-bold text-white" th:text="${user.email}">Email</a>
+        <a class="navbar-text font-weight-normal text-white">with roles:</a>
+        <a class="navbar-text font-weight-normal text-white" th:each="roles : ${user.roles}"
+           th:text="${roles.name}+'&nbsp;'">Role</a>
+    </div>
+    <a class="navbar-text" href="#!" th:href="@{/logout}">Logout</a>
 </div>
-<div align="center">
-    <form th:object="${user}">
-        <p>ID: <a th:text="${user.id}"/></p>
-        <p>Email: <a th:text="${user.email}"/></p>
-        <p>Password: <a th:text="${user.password}"/></p>
-        <p>Role:
-            <a>
-                <ul>
-                    <li th:each="role: ${user.roles}" th:text="${role.name}"></li>
-                </ul>
-            </a></p>
-    </form>
+
+<div class="container-fluid bg-light">
+    <div class="row">
+        <div class="col-2 bg-white" style="height: 100vh;  margin-left: -20px;">
+            <ul class="nav nav-pills nav-justified flex-column" style="margin-right: -15px">
+                <li class="nav-item">
+                    <a class="nav-link text-left col-12 active" data-toggle="tab" href="#userMain">User</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-10 tab-content">
+            <div class="tab-pane show fade active" id="userMain">
+                <h1>User information-page</h1>
+                <div class="card">
+                    <h3 class="card-header">About user</h3>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Role</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td th:text="${user.getId()}">ID</td>
+                                <td th:text="${user.getEmail()}">Email</td>
+                                <td th:text="${user.getPassword()}">Password</td>
+                                <td>
+                                    <ul>
+                                        <li th:each="role: ${user.getRoles()}" th:text="${role.getName()}"></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
