@@ -88,28 +88,26 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="add">
-                        <div class="card">
-                            <form action="/admin/add" method="post">
+                        <div class="card result">
+                            <!--<form action="/admin/add" method="post"> -->
                                 <h3 class="card-header font-weight-bold bg-light border-bottom">Add new user</h3>
                                 <div class="col-3 offset-5" align="center">
                                     <h4 style="margin-top: 15px">Email</h4>
-                                    <input type="email" size="28" placeholder="Email address"
+                                    <input id="addEmail" type="email" size="28" placeholder="Email address"
                                            th:field="${newUser.email}">
                                     <h4 style="margin-top: 15px">Password</h4>
-                                    <input type="password" size="28" placeholder="Password"
+                                    <input id="addPassword" type="password" size="28" placeholder="Password"
                                            th:field="${newUser.password}">
                                     <h4 style="margin-top: 15px">Role</h4>
-                                    <select class="custom-select" th:object="${newUser}" th:field="*{roles}">
+                                    <select id="addRoles" class="custom-select" th:object="${newUser}" th:field="*{roles}">
                                         <option selected disabled hidden value="1">Open this select menu</option>
                                         <option th:each="roles : ${newUser.roles}" th:value="${roles.getId()}"
                                                 th:label="${roles.getName()}">User
                                         </option>
                                     </select>
-                                    <button type="submit" style="margin-top: 15px; margin-bottom: 15px"
-                                            class="btn btn-success">Add new user
-                                    </button>
+                                    <button id="addUserBtn" type="submit" style="margin-top: 15px; margin-bottom: 15px" class="btn btn-success" onclick="addUser()">Add new user</button>
                                 </div>
-                            </form>
+                            <!--</form> -->
                         </div>
                     </div>
                 </div>
