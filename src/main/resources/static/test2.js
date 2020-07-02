@@ -37,15 +37,34 @@ $(document).ready(function () {
 })
 
 function addUser() {
+    console.log($('#fromAddUser').serializeArray());
+   /*let roleName;
+    if ($("#addRoles").val() === 1) {
+        roleName = 'ROLE_USER';
+    } else {
+        roleName = 'ROLE_ADMIN'
+    }
     let dataFromForm = {
         email: $("#addEmail").val(),
         password: $("#addPassword").val(),
-        //roles: $("#addRoles").val()
+        roles: {
+            id: $("#addRoles").val(),
+            name: roleName
+        }
+    }*/
+    let dataFromForm = {
+        email: $("#addEmail").val(),
+        password: $("#addPassword").val(),
+        roles: $("#addRoles").val()
     }
+
+    console.log(dataFromForm);
+
     $.ajax({
         type: 'POST',
         url: '/rest/admin/add',
         data: JSON.stringify(dataFromForm),
+        //     rolesIds: JSON.stringify(roleIds)
         contentType: "application/json",
         dataType: "json",
         success: function (data) {

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserService;
 
+
 @RestController
 @RequestMapping("/rest")
 public class AdminRestController {
@@ -23,9 +24,13 @@ public class AdminRestController {
     }
 
     @PostMapping("admin/add")
-    public void addUser(@RequestBody String user) {
-        User userFromJson = getUser(user);
-        userService.save(userFromJson);
+    public void addUser(@RequestBody User user) {
+       // User userFromJson = getUser(user);
+//        String email = "email";
+//        String password = "password";
+//        int roleId;
+
+        userService.save(user);
     }
 
     private User getUser(String user) {
