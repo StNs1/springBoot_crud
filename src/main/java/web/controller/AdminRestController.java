@@ -24,18 +24,10 @@ public class AdminRestController {
     }
 
     @PostMapping("admin/add")
-    public void addUser(@RequestBody User user) {
-       // User userFromJson = getUser(user);
-//        String email = "email";
-//        String password = "password";
-//        int roleId;
-
-        userService.save(user);
-    }
-
-    private User getUser(String user) {
-        Gson gson = new Gson();
-        User userFromJson = gson.fromJson(user, User.class);
-        return userFromJson;
+    public User addUser(@RequestBody User user) {
+        if (user.getEmail() != null && userService.getUserByEmail(user.getEmail()) == null) {
+            userService.save(user);
+        }
+        return user;
     }
 }
