@@ -157,10 +157,10 @@ function editUser() {
 function addUserInTable(list) {
     let tbody = $("#tbody");
     tbody.append(`<tr>`);
-    tbody.append(`<td id="id+${list.id}">${list.id}</td>`);
-    tbody.append(`<td id="email+${list.id}">${list.email}</td>`);
-    tbody.append(`<td id="password+${list.id}">${list.password}</td>`);
-    let roleTd = `<td id="role+${list.id}">`;
+    tbody.append(`<td>${list.id}</td>`);
+    tbody.append(`<td>${list.email}</td>`);
+    tbody.append(`<td>${list.password}</td>`);
+    let roleTd = `<td>`;
     for (let role in list.roles) {
         roleTd += list.roles[role].name;
     }
