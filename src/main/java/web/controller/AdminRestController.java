@@ -30,4 +30,33 @@ public class AdminRestController {
         }
         return user;
     }
+
+    @PostMapping("admin/edit")
+    public User editUserGet(@RequestBody User user) {
+        user = userService.getUserById(user.getId());
+        user.setRoles(userService.getRoles(1L, 2L));
+        return user;
+    }
+
+    @PostMapping("admin/delete")
+    public User deleteUserGet(@RequestBody User user) {
+        user = userService.getUserById(user.getId());
+        return user;
+    }
+
+    @DeleteMapping("admin/delete")
+    public String deleteUser(@RequestBody User user) {
+        userService.deleteUser(user.getId());
+        Gson gson = new Gson();
+        String json = gson.toJson(userService.listUsers());
+        return json;
+    }
+
+    @PutMapping("admin/edit")
+    public String editUserPUT(@RequestBody User user) {
+        userService.save(user);
+        Gson gson = new Gson();
+        String json = gson.toJson(userService.listUsers());
+        return json;
+    }
 }

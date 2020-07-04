@@ -12,6 +12,11 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <script src="test2.js"></script>
+    <style>
+        li {
+            list-style-type: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -53,7 +58,7 @@
                     <div class="tab-pane fade show active" id="admin">
                         <div class="card">
                             <h3 class="card-header font-weight-bold bg-light">All users</h3>
-                            <table class="card-body table table-striped">
+                            <table class="card-body table table-striped" id="tableId">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
@@ -64,26 +69,7 @@
                                     <th>Delete</th>
                                 </tr>
                                 </thead>
-                                <tbody id="tbody">
-                                <!--<tr th:each="userList : ${list}">
-                                    <td th:text="${userList.getId()}">ID</td>
-                                    <td th:text="${userList.getEmail()}">Email</td>
-                                    <td th:text="${userList.getPassword()}">Password</td>
-                                    <td>
-                                        <ul>
-                                            <li th:each="role: ${userList.getRoles()}" th:text="${role.getName()}"></li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                th:data-target="'#editModal'+${userList.getId()}">Edit</button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                th:data-target="'#deleteModal'+${userList.getId()}">Delete</button>
-                                    </td>
-                                </tr> -->
-                                </tbody>
+                                <tbody id="tbody"></tbody>
                             </table>
                         </div>
                     </div>
@@ -145,11 +131,6 @@
         </div>
     </div>
 </div>
-
-<!-- Modal
-th:id="'editModal'+${userList.getId()}"
-th:id="'deleteModal'+${userList.getId()}"
--->
 <div th:each="userList: ${list}">
     <div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -163,37 +144,23 @@ th:id="'deleteModal'+${userList.getId()}"
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/admin/edit}" method="post"
-                          th:id="'editForm'+${userList.getId()}">
+                    <form id="editForm">
                         <div class="col-4 offset-3" align="center">
                             <h4 style="margin-top: 15px">ID</h4>
-                            <input type="text" size="28" name="id"
-                                   th:value="${userList.getId()}"
-                                   readonly="readonly">
+                            <input id="idInput" type="text" size="28" name="id" readonly="readonly">
                             <h4 style="margin-top: 15px">Email</h4>
-                            <input type="email" size="28" name="email"
-                                   placeholder="Email address"
-                                   th:value="${userList.getEmail()}">
+                            <input id="emailInput" type="email" size="28" name="email" placeholder="Email address">
                             <h4 style="margin-top: 15px">Password</h4>
-                            <input type="text" size="28" name="password"
-                                   placeholder="Password"
-                                   th:value="${userList.getPassword()}">
+                            <input id="passwordInput" type="text" size="28" name="password" placeholder="Password">
                             <h4 style="margin-top: 15px">Role</h4>
-                            <select style="width: 235px" class="custom-select" name="roles"
-                                    th:object="${userList}" th:value="*{roles}">
-                                <option th:each="roles : ${newUser.roles}"
-                                        th:value="${roles.getId()}"
-                                        th:label="${roles.getName()}">User
-                                </option>
+                            <select id="selectInput" style="width: 235px" class="custom-select" name="roles">
                             </select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">Close
-                    </button>
-                    <button type="submit" class="btn btn-primary" th:form="'editForm'+${userList.getId()}">Edit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" onclick="editUser(); return false;" form="editForm">Edit</button>
                 </div>
             </div>
         </div>
@@ -204,45 +171,28 @@ th:id="'deleteModal'+${userList.getId()}"
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModalCenteredLabel">Delete
                         user</h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/admin/delete}" method="get"
-                          th:id="'userDelete'+${userList.getId()}">
+                    <form id="userDelete">
                         <div class="col-4 offset-3" align="center">
                             <h4 style="margin-top: 15px">ID</h4>
-                            <input type="text" size="28" name="id" th:value="${userList.id}"
-                                   readonly="readonly">
+                            <input id="idInputDelete" type="text" size="28" name="id" readonly="readonly">
                             <h4 style="margin-top: 15px">Email</h4>
-                            <input type="email" size="28" name="email" readonly="readonly"
-                                   placeholder="Email address"
-                                   th:value="${userList.email}">
+                            <input id="emailInputDelete" type="email" size="28" name="email" readonly="readonly" placeholder="Email address">
                             <h4 style="margin-top: 15px">Password</h4>
-                            <input type="text" size="28" name="password" readonly="readonly"
-                                   placeholder="Password"
-                                   th:value="${userList.password}">
+                            <input id="passwordInputDelete" type="text" size="28" name="password" readonly="readonly" placeholder="Password">
                             <h4 style="margin-top: 15px">Role</h4>
-                            <select style="width: 235px" readonly="readonly" name="roles"
-                                    class="custom-select"
-                                    th:object="${userList}" th:value="*{roles}" multiple>
-                                <option th:each="roles : ${userList.roles}"
-                                        th:value="${roles.getId()}"
-                                        th:label="${roles.getName()}">User
-                                </option>
+                            <select id="selectInputDelete" style="width: 235px" readonly="readonly" name="roles" class="custom-select" multiple>
                             </select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">Close
-                    </button>
-                    <button type="submit" class="btn btn-danger"
-                            th:form="'userDelete'+${userList.getId()}">Delete
-                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger" onclick="deleteUser(); return false;" form="userDelete">Delete</button>
                 </div>
             </div>
         </div>
