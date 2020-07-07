@@ -1,9 +1,11 @@
 package web.controller;
 
-import com.google.gson.Gson;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserService;
+
+import java.util.List;
 
 
 @RestController
@@ -17,46 +19,40 @@ public class AdminRestController {
     }
 
     @GetMapping
-    public String getUsers() {
-        Gson gson = new Gson();
-        String json = gson.toJson(userService.listUsers());
-        return json;
+    public ResponseEntity<List<User>> getUsers() {
+        return ResponseEntity.ok(userService.listUsers());
     }
 
     @PostMapping("admin/add")
-    public User addUser(@RequestBody User user) {
+    public ResponseEntity<User> addUser(@RequestBody User user) {
         if (user.getEmail() != null && userService.getUserByEmail(user.getEmail()) == null) {
-            userService.save(user);
+            return ResponseEntity.ok(userService.save(user));
         }
-        return user;
+        return (ResponseEntity<User>) ResponseEntity.badRequest();
     }
 
     @PostMapping("admin/edit")
-    public User editUserGet(@RequestBody User user) {
+    public ResponseEntity<User> editUserGet(@RequestBody User user) {
         user = userService.getUserById(user.getId());
         user.setRoles(userService.getRoles(1L, 2L));
-        return user;
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("admin/delete")
-    public User deleteUserGet(@RequestBody User user) {
+    public ResponseEntity<User> deleteUserGet(@RequestBody User user) {
         user = userService.getUserById(user.getId());
-        return user;
+        return ResponseEntity.ok(user);
     }
 
     @DeleteMapping("admin/delete")
-    public String deleteUser(@RequestBody User user) {
+    public ResponseEntity<List<User>> deleteUser(@RequestBody User user) {
         userService.deleteUser(user.getId());
-        Gson gson = new Gson();
-        String json = gson.toJson(userService.listUsers());
-        return json;
+        return ResponseEntity.ok(userService.listUsers());
     }
 
     @PutMapping("admin/edit")
-    public String editUserPUT(@RequestBody User user) {
+    public ResponseEntity<List<User>> editUserPUT(@RequestBody User user) {
         userService.save(user);
-        Gson gson = new Gson();
-        String json = gson.toJson(userService.listUsers());
-        return json;
+        return ResponseEntity.ok(userService.listUsers());
     }
 }
